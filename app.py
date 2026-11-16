@@ -1006,8 +1006,17 @@ except Exception as e:
     st.error(f"Predictor Engine Error: {e}")
 
 # SECTION 3: INDIVIDUAL REFEREE LEAGUE TABLE
-st.markdown("---")
-st.markdown("## Individual Referee League Table")
+# st.markdown("---")
+# st.markdown("## Individual Referee League Table")
+st.markdown(
+    """
+<div style="background-color: #f0f4fc; border-left: 6px solid #1155cc; padding: 12px 16px; margin: 40px 0 15px 0; border-radius: 4px;">
+    <h2 style="margin: 0; color: #1155cc; font-size: 22px;">3. Individual Referee League Table</h2>
+</div>
+""",
+    unsafe_allow_html=True,
+)
+
 st.markdown(
     "Rank every team officiated by a selected referee from most favoured to"
     " most penalised."
