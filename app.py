@@ -1624,8 +1624,15 @@ except Exception as e:
     st.error(f"Outlier Scanner Error: {e}")
 
 # SECTION 5: REFEREE TRENDS OVER TIME
-st.markdown("---")
-st.markdown("## Referee Trends Over Time")
+st.markdown(
+    """
+<div style="background-color: #f0f4fc; border-left: 6px solid #1155cc; padding: 12px 16px; margin: 40px 0 15px 0; border-radius: 4px;">
+    <h2 style="margin: 0; color: #1155cc; font-size: 22px;">5. Referee Trends Over Time</h2>
+</div>
+""",
+    unsafe_allow_html=True,
+)
+
 st.markdown(
     "Track how a referee's disciplinary averages or club-specific variance"
     " evolve season by season."
