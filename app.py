@@ -472,6 +472,29 @@ if not all_teams:
     st.warning("No teams found. Try widening filters.")
     st.stop()
 
+if st.checkbox("📖 How the Double-Adjusted Model Works (Methodology)"):
+    st.info(
+        "**Why we adjust for both the Team and the Referee:**\n\n"
+        "If an aggressive team (who commits lots of fouls) plays under a strict"
+        " referee (who hands out lots of cards), you naturally expect a high"
+        " number of cards. Looking at raw averages alone makes every referee"
+        " look harsh on aggressive teams.\n\n"
+        "**How we calculate the Expected Baseline:**\n"
+        "1. We start with the **League Average** for a single team.\n"
+        "2. We add how much more (or less) the **Team** normally gets compared"
+        " to the league.\n"
+        "3. We add how much more (or less) the **Referee** normally gives"
+        " compared to the league.\n\n"
+        "**Reading the Variance:**\n"
+        "* **+0.00 (Neutral):** The referee treated the team exactly as"
+        " expected.\n"
+        "* **Positive (+ 🔴):** The referee gave **more** fouls/cards than"
+        " expected (harsher on this team).\n"
+        "* **Negative (- 🟢):** The referee gave **fewer** fouls/cards than"
+        " expected (more lenient on this team)."
+    )
+
+
 STATE_FILE = "ui_state.json"
 USE_SESSION = hasattr(st, "session_state")
 
