@@ -259,7 +259,7 @@ def update_master_csv():
     )
 
 
-@st.cache(allow_output_mutation=True)
+@st.cache_data
 def load_data(cache_buster):
     try:
         needed_cols = [
