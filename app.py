@@ -473,9 +473,14 @@ if not all_teams:
     st.stop()
 
 STATE_FILE = "ui_state.json"
+USE_SESSION = hasattr(st, "session_state")
 
 
 def load_ui_state():
+    if USE_SESSION:
+        if "ui_state" not in st.session_state:
+            st.session_state["ui_state"] = {}
+        return st.session_state["ui_state"]
     if os.path.exists(STATE_FILE):
         try:
             with open(STATE_FILE, "r") as f:
@@ -486,6 +491,11 @@ def load_ui_state():
 
 
 def save_ui_state(updates):
+    if USE_SESSION:
+        if "ui_state" not in st.session_state:
+            st.session_state["ui_state"] = {}
+        st.session_state["ui_state"].update(updates)
+        return
     state = load_ui_state()
     state.update(updates)
     try:
@@ -493,7 +503,6 @@ def save_ui_state(updates):
             json.dump(state, f)
     except Exception:
         pass
-
 
 def get_idx(options, saved_val, fallback_val=None):
     if saved_val in options:
