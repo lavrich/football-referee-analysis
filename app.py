@@ -485,13 +485,13 @@ if st.checkbox("📖 Methodology"):
         " to the league.\n"
         "3. We add how much more (or less) the **Referee** normally gives"
         " compared to the league.\n\n"
-        "**Reading the Variance:**\n"
-        "* **+0.00 (Neutral):** The referee treated the team exactly as"
-        " expected.\n"
-        "* **Positive (+ 🔴):** The referee gave **more** fouls/cards than"
-        " expected (harsher on this team).\n"
-        "* **Negative (- 🟢):** The referee gave **fewer** fouls/cards than"
-        " expected (more lenient on this team)."
+        "**Reading the Variance & Rating Dots:**\n"
+        "* **⚪ Neutral:** Within normal statistical noise (e.g., within ±0.10"
+        " yellow cards or ±0.50 fouls per game).\n"
+        "* **🔴 / 🔴🔴 / 🔴🔴🔴 Harsher than expected:** The referee gave"
+        " noticeably more fouls or cards than expected.\n"
+        "* **🟢 / 🟢🟢 / 🟢🟢🟢 More lenient than expected:** The referee"
+        " gave noticeably fewer fouls or cards than expected."
     )
 
 
@@ -534,9 +534,30 @@ def get_idx(options, saved_val, fallback_val=None):
         return options.index(fallback_val)
     return 0
 
-
 ui_state = load_ui_state()
 
+def get_rating_dots(v, metric):
+    if metric == "Yellow Cards":
+        t_neu, t_mid, t_high = 0.10, 0.25, 0.45
+    elif metric == "Red Cards":
+        t_neu, t_mid, t_high = 0.02, 0.07, 0.14
+    else:  # Fouls
+        t_neu, t_mid, t_high = 0.50, 1.25, 2.25
+
+    if -t_neu <= v <= t_neu:
+        return "⚪"
+    elif t_neu < v < t_mid:
+        return "🔴"
+    elif t_mid <= v < t_high:
+        return "🔴🔴"
+    elif v >= t_high:
+        return "🔴🔴🔴"
+    elif -t_mid < v < -t_neu:
+        return "🟢"
+    elif -t_high < v <= -t_mid:
+        return "🟢🟢"
+    else:
+        return "🟢🟢🟢"
 
 # SECTION 1: INDIVIDUAL TEAM REPORT ENGINE
 st.markdown(
@@ -794,21 +815,10 @@ try:
                     baseline_col_label, "Variance",
                 ]
 
-                def assign_tier_dots(v):
-                    if v >= t_high:
-                        return "🔴🔴🔴"
-                    elif t_mid <= v < t_high:
-                        return "🔴🔴"
-                    elif 0.0 < v < t_mid:
-                        return "🔴"
-                    elif -t_mid < v <= 0.0:
-                        return "🟢"
-                    elif -t_high < v <= -t_mid:
-                        return "🟢🟢"
-                    else:
-                        return "🟢🟢🟢"
+                display_df["Rating"] = display_df["Variance"].apply(
+                 lambda v: get_rating_dots(v, metric_choice)
+             )
 
-                display_df["Rating"] = display_df["Variance"].apply(assign_tier_dots)
                 display_df["Avg Team Actions"] = display_df["Avg Team Actions"].map("{:.2f}".format)
                 display_df[baseline_col_label] = display_df[baseline_col_label].map("{:.2f}".format)
                 display_df["Variance"] = display_df["Variance"].map("{:+.2f}".format)
@@ -1298,22 +1308,10 @@ try:
                     base_label_s3, "Variance",
                 ]
 
-                def dots_s3(v):
-                    if v >= th_h:
-                        return "🔴🔴🔴"
-                    elif th_m <= v < th_h:
-                        return "🔴🔴"
-                    elif 0.0 < v < th_m:
-                        return "🔴"
-                    elif -th_m < v <= 0.0:
-                        return "🟢"
-                    elif -th_h < v <= -th_m:
-                        return "🟢🟢"
-                    else:
-                        return "🟢🟢🟢"
+                disp_s3["Rating"] = disp_s3["Variance"].apply(
+                 lambda v: get_rating_dots(v, metric_choice_s3)
+             )
 
-                disp_s3.insert(0, "Pos", range(1, len(disp_s3) + 1))
-                disp_s3["Rating"] = disp_s3["Variance"].apply(dots_s3)
                 disp_s3["Avg Team Actions"] = disp_s3["Avg Team Actions"].map(
                     "{:.2f}".format
                 )
@@ -1537,24 +1535,10 @@ try:
 
                 df_s4["Variance"] = df_s4["Actual_Avg"] - df_s4["Baseline"]
 
-                def dots_s4(v):
-                    if v >= th_h4:
-                        return "🔴🔴🔴"
-                    elif th_m4 <= v < th_h4:
-                        return "🔴🔴"
-                    elif 0.0 < v < th_m4:
-                        return "🔴"
-                    elif -th_m4 < v <= 0.0:
-                        return "🟢"
-                    elif -th_h4 < v <= -th_m4:
-                        return "🟢🟢"
-                    else:
-                        return "🟢🟢🟢"
+                    out["Rating"] = out["Variance"].apply(
+                     lambda v: get_rating_dots(v, metric_choice_s4)
+                 )
 
-                def format_outlier_table(sub_df):
-                    out = sub_df.copy()
-                    out.insert(0, "Rank", range(1, len(out) + 1))
-                    out["Rating"] = out["Variance"].apply(dots_s4)
                     out["Avg Actions"] = out["Actual_Avg"].map("{:.2f}".format)
                     out[base_label_s4] = out["Baseline"].map("{:.2f}".format)
                     out["Variance"] = out["Variance"].map("{:+.2f}".format)
