@@ -516,7 +516,15 @@ ui_state = load_ui_state()
 
 
 # SECTION 1: INDIVIDUAL TEAM REPORT ENGINE
-st.markdown("## Individual Team Report Engine")
+st.markdown(
+    """
+<div style="background-color: #f0f4fc; border-left: 6px solid #1155cc; padding: 12px 16px; margin: 40px 0 15px 0; border-radius: 4px;">
+    <h2 style="margin: 0; color: #1155cc; font-size: 22px;">1. Individual Team Report Engine</h2>
+</div>
+""",
+    unsafe_allow_html=True,
+)
+
 selected_team = st.selectbox(
     "Choose a Team to Analyse:",
     all_teams,
@@ -866,7 +874,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.markdown("## Upcoming Match Predictor Engine")
 st.markdown(
     "Evaluate officiating tendencies across all three disciplinary metrics"
     " using the Double-Adjusted Expected model."
