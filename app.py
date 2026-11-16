@@ -1308,9 +1308,11 @@ try:
                     base_label_s3, "Variance",
                 ]
 
+                disp_s3.insert(0, "Pos", range(1, len(disp_s3) + 1))
                 disp_s3["Rating"] = disp_s3["Variance"].apply(
-                 lambda v: get_rating_dots(v, metric_choice_s3)
-             )
+                    lambda v: get_rating_dots(v, metric_choice_s3)
+                )
+
 
                 disp_s3["Avg Team Actions"] = disp_s3["Avg Team Actions"].map(
                     "{:.2f}".format
@@ -1535,11 +1537,14 @@ try:
 
                 df_s4["Variance"] = df_s4["Actual_Avg"] - df_s4["Baseline"]
 
+                def format_outlier_table(sub_df):
+                    out = sub_df.copy()
+                    out.insert(0, "Rank", range(1, len(out) + 1))
                     out["Rating"] = out["Variance"].apply(
-                     lambda v: get_rating_dots(v, metric_choice_s4)
-                 )
-
+                        lambda v: get_rating_dots(v, metric_choice_s4)
+                    )
                     out["Avg Actions"] = out["Actual_Avg"].map("{:.2f}".format)
+
                     out[base_label_s4] = out["Baseline"].map("{:.2f}".format)
                     out["Variance"] = out["Variance"].map("{:+.2f}".format)
                     out = out[[
