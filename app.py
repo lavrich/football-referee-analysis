@@ -472,7 +472,7 @@ if not all_teams:
     st.warning("No teams found. Try widening filters.")
     st.stop()
 
-if st.checkbox("📖 How the Double-Adjusted Model Works (Methodology)"):
+if st.checkbox("📖 Methodology"):
     st.info(
         "**Why we adjust for both the Team and the Referee:**\n\n"
         "If an aggressive team (who commits lots of fouls) plays under a strict"
