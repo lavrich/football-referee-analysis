@@ -590,16 +590,7 @@ try:
             index=get_idx(s1_metric_opts, ui_state.get("s1_metric")),
         )
 
-        s1_base_opts = [
-            "Double-Adjusted (Team + Ref)",
-            "Team Average Only",
-            "Referee Average Only (Original)",
-        ]
-        baseline_mode = st.selectbox(
-            "Baseline Comparison Mode:",
-            s1_base_opts,
-            index=get_idx(s1_base_opts, ui_state.get("s1_baseline")),
-        )
+        baseline_mode = "Double-Adjusted (Team + Ref)"
 
         s1_sort_opts = [
             "Most Unfavourable First (Variance)",
@@ -899,7 +890,6 @@ st.markdown(
 
 st.markdown(
     "Evaluate officiating tendencies across all three disciplinary metrics"
-    " using the Double-Adjusted Expected model."
 )
 try:
     raw_refs = df_filtered["Referee"].unique().tolist()
@@ -1088,17 +1078,7 @@ try:
             key="s3_metric_select",
         )
 
-        s3_base_opts = [
-            "Double-Adjusted (Team + Ref)",
-            "Team Average Only",
-            "Referee Average Only (Original)",
-        ]
-        baseline_mode_s3 = st.selectbox(
-            "Baseline Comparison Mode:",
-            s3_base_opts,
-            index=get_idx(s3_base_opts, ui_state.get("s3_baseline")),
-            key="s3_baseline_select",
-        )
+        baseline_mode_s3 = "Double-Adjusted (Team + Ref)"
 
         s3_sort_opts = [
             "Most Favoured First (Lowest Variance)",
@@ -1382,17 +1362,7 @@ try:
         key="s4_metric_select",
     )
 
-    s4_base_opts = [
-        "Double-Adjusted (Team + Ref)",
-        "Team Average Only",
-        "Referee Average Only (Original)",
-    ]
-    baseline_mode_s4 = st.selectbox(
-        "Baseline Comparison Mode:",
-        s4_base_opts,
-        index=get_idx(s4_base_opts, ui_state.get("s4_baseline")),
-        key="s4_baseline_select",
-    )
+    baseline_mode_s4 = "Double-Adjusted (Team + Ref)"
 
     save_ui_state({
         "s4_metric": metric_choice_s4,
