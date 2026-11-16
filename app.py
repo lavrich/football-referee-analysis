@@ -857,11 +857,15 @@ except Exception as e:
 
 
 # SECTION 2: COMBINED ALL-IN-ONE MATCH PREDICTOR ENGINE
-# st.markdown("---")
 st.markdown(
-    '<hr style="border: none; height: 4px; background-color: #1155cc; margin: 45px 0 25px 0; border-radius: 2px;">',
+    """
+<div style="background-color: #f0f4fc; border-left: 6px solid #1155cc; padding: 12px 16px; margin: 40px 0 15px 0; border-radius: 4px;">
+    <h2 style="margin: 0; color: #1155cc; font-size: 22px;">2. Upcoming Match Predictor Engine</h2>
+</div>
+""",
     unsafe_allow_html=True,
 )
+
 st.markdown("## Upcoming Match Predictor Engine")
 st.markdown(
     "Evaluate officiating tendencies across all three disciplinary metrics"
@@ -1327,8 +1331,14 @@ except Exception as e:
     st.error(f"Referee League Table Error: {e}")
 
 # SECTION 4: GLOBAL REFEREE-TEAM OUTLIER SCANNER
-st.markdown("---")
-st.markdown("## Global Referee-Team Outlier Scanner")
+st.markdown(
+    """
+<div style="background-color: #f0f4fc; border-left: 6px solid #1155cc; padding: 12px 16px; margin: 40px 0 15px 0; border-radius: 4px;">
+    <h2 style="margin: 0; color: #1155cc; font-size: 22px;">4. Global Referee-Team Outlier Scanner</h2>
+</div>
+""",
+    unsafe_allow_html=True,
+)
 st.markdown(
     "Identify the biggest statistical officiating anomalies across every"
     " referee and club pairing within your active sidebar filters."
