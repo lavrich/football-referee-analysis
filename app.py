@@ -857,7 +857,11 @@ except Exception as e:
 
 
 # SECTION 2: COMBINED ALL-IN-ONE MATCH PREDICTOR ENGINE
-st.markdown("---")
+# st.markdown("---")
+st.markdown(
+    '<hr style="border: none; height: 4px; background-color: #1155cc; margin: 45px 0 25px 0; border-radius: 2px;">',
+    unsafe_allow_html=True,
+)
 st.markdown("## Upcoming Match Predictor Engine")
 st.markdown(
     "Evaluate officiating tendencies across all three disciplinary metrics"
